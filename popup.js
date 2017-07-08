@@ -32,6 +32,7 @@ function getCurrentTabUrl(callback) {
     // If you want to see the URL of other tabs (e.g. after removing active:true
     // from |queryInfo|), then the "tabs" permission is required to see their
     // "url" properties.
+
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
     callback(url);
@@ -96,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
     renderStatus('Performing Google Image search for ' + url);
+
+    alert(url);
 
     getImageUrl(url, function(imageUrl, width, height) {
 
