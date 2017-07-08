@@ -55,7 +55,7 @@ function buildPopupDom(divName, datas) {
   //
   // var ul = document.createElement('ul');
   // popupDiv.appendChild(ul);
-
+  alert("I entered buildPopupDom");
   datas = [];
   datas.push("www.google.com");
   datas.push("www.stackoverflow.com");
@@ -183,10 +183,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    // alert(url);
+    alert(url);
     urlArray = []
-    urlArray.push("www.google.com");
-    urlArray.push("https://developer.chrome.com/extensions");
+    // urlArray.push("www.google.com");
+    // urlArray.push("https://developer.chrome.com/extensions");
     buildPopupDom("typedUrl_div", urlArray);
 
     // getImageUrl(url, function(imageUrl, width, height) {
