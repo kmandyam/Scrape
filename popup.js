@@ -48,6 +48,89 @@ function getCurrentTabUrl(callback) {
   // alert(url); // Shows "undefined", because chrome.tabs.query is async.
 }
 
+// Given an array of URLs, build a DOM list of those URLs in the
+// browser action popup.
+function buildPopupDom(divName, datas) {
+  // var popupDiv = document.getElementById(divName);
+  //
+  // var ul = document.createElement('ul');
+  // popupDiv.appendChild(ul);
+
+  datas = [];
+  datas.push("www.google.com");
+  datas.push("www.stackoverflow.com");
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:5000/spectrum",
+    data: {
+      urlArray: JSON.stringify(datas)
+    },
+    success: function( result ) {
+      var position = "";
+      result = parseInt(result);
+      // if(result <= -75){
+      //   //really liberal
+      //   position = "Mostly Liberal"
+      // }else if(result >= -75 && result <= -25){
+      //   position = "Semi Liberal"
+      // }else if(result >= -25 && result <= 0){
+      //   position = "Neutral, Leans Liberal"
+      // }else if(result >= 0 && result <= 25){
+      //   position = "Neutral, Leans Conservative"
+      // }else if(result >= 25 && result <= 75){
+      //   position = "Semi Conservative"
+      // }else if(result >= 75){
+      //   position = "Mostly Conservative"
+      // }
+      var tickerPos = (result + 100) / 2;
+      console.log(tickerPos);
+      // $("#exposure_title").text(position);
+      // $(".exposure_ticker").css("margin-left", tickerPos + "%");
+      // $( "#finalscore" ).html( "<strong>" + Math.abs(result) + "%</strong>" );
+      // $("#lean").text(position);
+    }
+  });
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: "http://localhost:5000/credibility",
+  //   data: {
+  //     urlArray: JSON.stringify(datas)
+  //   },
+  //   success: function( result ) {
+  //       var creditiblity = "";
+  //       result = parseInt(result);
+  //       if(0 <= result && result <= 33){
+  //            creditiblity = "Low Credibility";
+  //       }else if(34 < result && result  <= 67){
+  //            creditiblity = "Medium Credibility";
+  //       }else if(68 < result && result <= 100){
+  //            creditiblity = "High Credibility";
+  //       }
+  //     $("#credibility_title").text(creditiblity);
+  //     $(".credibility_ticker").css("margin-left", result + "%");
+  //     $( "#credibility" ).html( "<strong>" + Math.abs(result) + "%</strong>" );
+  //     $("#suggest_credibility").text(creditiblity);
+  //   }
+  // });
+
+  // for (var i = 0, ie = datas.length; i < ie; ++i) {
+  //   var a = document.createElement('a');
+  //   a.href = datas[i];
+  //   a.appendChild(document.createTextNode(datas[i]));
+  //   a.addEventListener('click', onAnchorClick);
+  //
+  //   var li = document.createElement('li');
+  //   li.appendChild(a);
+  //
+  //   ul.appendChild(li);
+  // }
+}
+
+
+
+
 /**
  * @param {string} searchTerm - Search term for Google Image search.
  * @param {function(string,number,number)} callback - Called when an image has
@@ -98,24 +181,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Put the image URL in Google search.
     renderStatus('Performing Google Image search for ' + url);
 
-    alert(url);
 
-    getImageUrl(url, function(imageUrl, width, height) {
 
-      renderStatus('Search term: ' + url + '\n' +
-          'Google image search result: ' + imageUrl);
-      var imageResult = document.getElementById('image-result');
-      // Explicitly set the width/height to minimize the number of reflows. For
-      // a single image, this does not matter, but if you're going to embed
-      // multiple external images in your page, then the absence of width/height
-      // attributes causes the popup to resize multiple times.
-      imageResult.width = width;
-      imageResult.height = height;
-      imageResult.src = imageUrl;
-      imageResult.hidden = false;
+    // alert(url);
+    urlArray = []
+    urlArray.push("www.google.com");
+    urlArray.push("https://developer.chrome.com/extensions");
+    buildPopupDom("typedUrl_div", urlArray);
 
-    }, function(errorMessage) {
-      renderStatus('Cannot display image. ' + errorMessage);
-    });
+    // getImageUrl(url, function(imageUrl, width, height) {
+    //
+    //   renderStatus('Search term: ' + url + '\n' +
+    //       'Google image search result: ' + imageUrl);
+    //   var imageResult = document.getElementById('image-result');
+    //   // Explicitly set the width/height to minimize the number of reflows. For
+    //   // a single image, this does not matter, but if you're going to embed
+    //   // multiple external images in your page, then the absence of width/height
+    //   // attributes causes the popup to resize multiple times.
+    //   imageResult.width = width;
+    //   imageResult.height = height;
+    //   imageResult.src = imageUrl;
+    //   imageResult.hidden = false;
+    //
+    // }, function(errorMessage) {
+    //   renderStatus('Cannot display image. ' + errorMessage);
+    // });
   });
 });
