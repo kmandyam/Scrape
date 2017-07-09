@@ -34,7 +34,7 @@ function getCurrentTabUrl(callback) {
     // "url" properties.
 
     console.assert(typeof url == 'string', 'tab.url should be a string');
-    alert(url);
+    // alert(url);
 
     callback(url);
   });
@@ -128,13 +128,9 @@ function buildPopupDom(divName, datas) {
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
-    renderStatus('Performing Google Image search for ' + url);
+    // renderStatus('Performing Google Image search for ' + url);
 
-    alert(url);
-    urlArray = []
-    // urlArray.push("www.google.com");
-    // urlArray.push("https://developer.chrome.com/extensions");
-    buildPopupDom("typedUrl_div", urlArray);
+
 
     // getImageUrl(url, function(imageUrl, width, height) {
     //
@@ -154,4 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
     //   renderStatus('Cannot display image. ' + errorMessage);
     // });
   });
+  // alert(url);
+  urlArray = []
+  // urlArray.push("www.google.com");
+  // urlArray.push("https://developer.chrome.com/extensions");
+  buildPopupDom("typedUrl_div", urlArray);
 });
