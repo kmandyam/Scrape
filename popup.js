@@ -34,6 +34,7 @@ function getCurrentTabUrl(callback) {
     // "url" properties.
 
     console.assert(typeof url == 'string', 'tab.url should be a string');
+    alert(url);
 
     callback(url);
   });
@@ -51,81 +52,29 @@ function getCurrentTabUrl(callback) {
 // Given an array of URLs, build a DOM list of those URLs in the
 // browser action popup.
 function buildPopupDom(divName, datas) {
-  // var popupDiv = document.getElementById(divName);
-  //
-  // var ul = document.createElement('ul');
-  // popupDiv.appendChild(ul);
-  alert("I entered buildPopupDom");
+  console.log("I entered buildPopupDom");
   datas = [];
   datas.push("www.google.com");
   datas.push("www.stackoverflow.com");
 
   $.ajax({
     type: "POST",
-    url: "http://localhost:5000/spectrum",
+    url: "http://localhost:5000/scrape",
     data: {
       urlArray: JSON.stringify(datas)
     },
     success: function( result ) {
-      var position = "";
+      // var position = "";
       result = parseInt(result);
-      // if(result <= -75){
-      //   //really liberal
-      //   position = "Mostly Liberal"
-      // }else if(result >= -75 && result <= -25){
-      //   position = "Semi Liberal"
-      // }else if(result >= -25 && result <= 0){
-      //   position = "Neutral, Leans Liberal"
-      // }else if(result >= 0 && result <= 25){
-      //   position = "Neutral, Leans Conservative"
-      // }else if(result >= 25 && result <= 75){
-      //   position = "Semi Conservative"
-      // }else if(result >= 75){
-      //   position = "Mostly Conservative"
-      // }
-      var tickerPos = (result + 100) / 2;
-      console.log(tickerPos);
+      // var tickerPos = (result + 100) / 2;
+      // console.log(tickerPos);
       // $("#exposure_title").text(position);
       // $(".exposure_ticker").css("margin-left", tickerPos + "%");
-      // $( "#finalscore" ).html( "<strong>" + Math.abs(result) + "%</strong>" );
+      $( "#finalscore" ).html( "<strong>" + Math.abs(result) + "%</strong>" );
       // $("#lean").text(position);
     }
   });
 
-  // $.ajax({
-  //   type: "POST",
-  //   url: "http://localhost:5000/credibility",
-  //   data: {
-  //     urlArray: JSON.stringify(datas)
-  //   },
-  //   success: function( result ) {
-  //       var creditiblity = "";
-  //       result = parseInt(result);
-  //       if(0 <= result && result <= 33){
-  //            creditiblity = "Low Credibility";
-  //       }else if(34 < result && result  <= 67){
-  //            creditiblity = "Medium Credibility";
-  //       }else if(68 < result && result <= 100){
-  //            creditiblity = "High Credibility";
-  //       }
-  //     $("#credibility_title").text(creditiblity);
-  //     $(".credibility_ticker").css("margin-left", result + "%");
-  //     $( "#credibility" ).html( "<strong>" + Math.abs(result) + "%</strong>" );
-  //     $("#suggest_credibility").text(creditiblity);
-  //   }
-  // });
-
-  // for (var i = 0, ie = datas.length; i < ie; ++i) {
-  //   var a = document.createElement('a');
-  //   a.href = datas[i];
-  //   a.appendChild(document.createTextNode(datas[i]));
-  //   a.addEventListener('click', onAnchorClick);
-  //
-  //   var li = document.createElement('li');
-  //   li.appendChild(a);
-  //
-  //   ul.appendChild(li);
-  // }
 }
 
 
@@ -138,50 +87,48 @@ function buildPopupDom(divName, datas) {
  * @param {function(string)} errorCallback - Called when the image is not found.
  *   The callback gets a string that describes the failure reason.
  */
-function getImageUrl(searchTerm, callback, errorCallback) {
-  // Google image search - 100 searches per day.
-  // https://developers.google.com/image-search/
-  var searchUrl = 'https://ajax.googleapis.com/ajax/services/search/images' +
-    '?v=1.0&q=' + encodeURIComponent(searchTerm);
-  var x = new XMLHttpRequest();
-  x.open('GET', searchUrl);
-  // The Google image search API responds with JSON, so let Chrome parse it.
-  x.responseType = 'json';
-  x.onload = function() {
-    // Parse and process the response from Google Image Search.
-    var response = x.response;
-    if (!response || !response.responseData || !response.responseData.results ||
-        response.responseData.results.length === 0) {
-      errorCallback('No response from Google Image search!');
-      return;
-    }
-    var firstResult = response.responseData.results[0];
-    // Take the thumbnail instead of the full image to get an approximately
-    // consistent image size.
-    var imageUrl = firstResult.tbUrl;
-    var width = parseInt(firstResult.tbWidth);
-    var height = parseInt(firstResult.tbHeight);
-    console.assert(
-        typeof imageUrl == 'string' && !isNaN(width) && !isNaN(height),
-        'Unexpected respose from the Google Image Search API!');
-    callback(imageUrl, width, height);
-  };
-  x.onerror = function() {
-    errorCallback('Network error.');
-  };
-  x.send();
-}
+// function getImageUrl(searchTerm, callback, errorCallback) {
+//   // Google image search - 100 searches per day.
+//   // https://developers.google.com/image-search/
+//   var searchUrl = 'https://ajax.googleapis.com/ajax/services/search/images' +
+//     '?v=1.0&q=' + encodeURIComponent(searchTerm);
+//   var x = new XMLHttpRequest();
+//   x.open('GET', searchUrl);
+//   // The Google image search API responds with JSON, so let Chrome parse it.
+//   x.responseType = 'json';
+//   x.onload = function() {
+//     // Parse and process the response from Google Image Search.
+//     var response = x.response;
+//     if (!response || !response.responseData || !response.responseData.results ||
+//         response.responseData.results.length === 0) {
+//       errorCallback('No response from Google Image search!');
+//       return;
+//     }
+//     var firstResult = response.responseData.results[0];
+//     // Take the thumbnail instead of the full image to get an approximately
+//     // consistent image size.
+//     var imageUrl = firstResult.tbUrl;
+//     var width = parseInt(firstResult.tbWidth);
+//     var height = parseInt(firstResult.tbHeight);
+//     console.assert(
+//         typeof imageUrl == 'string' && !isNaN(width) && !isNaN(height),
+//         'Unexpected respose from the Google Image Search API!');
+//     callback(imageUrl, width, height);
+//   };
+//   x.onerror = function() {
+//     errorCallback('Network error.');
+//   };
+//   x.send();
+// }
 
-function renderStatus(statusText) {
-  document.getElementById('status').textContent = statusText;
-}
+// function renderStatus(statusText) {
+//   document.getElementById('status').textContent = statusText;
+// }
 
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
     renderStatus('Performing Google Image search for ' + url);
-
-
 
     alert(url);
     urlArray = []
