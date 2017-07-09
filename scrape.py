@@ -18,7 +18,6 @@ def spectrum():
 
     urlList = json.loads(urlList)
     print urlList, "FIRST ONE"
-    # print urlList
 
     print "HELLO WORLD", len(urlList)
     return str(len(urlList))

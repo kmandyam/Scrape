@@ -53,9 +53,10 @@ function getCurrentTabUrl(callback) {
 // browser action popup.
 function buildPopupDom(divName, datas) {
   console.log("I entered buildPopupDom");
-  datas = [];
-  datas.push("www.google.com");
-  datas.push("www.stackoverflow.com");
+  // datas = [];
+  // datas.push("www.google.com");
+  // datas.push("www.stackoverflow.com");
+  console.log(datas);
 
   $.ajax({
     type: "POST",
@@ -131,7 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // renderStatus('Performing Google Image search for ' + url);
 
 
-
+    urlArray = []
+    urlArray.push(url);
+    console.log(url);
+    // urlArray.push("www.google.com");
+    // urlArray.push("https://developer.chrome.com/extensions");
+    buildPopupDom("typedUrl_div", urlArray);
     // getImageUrl(url, function(imageUrl, width, height) {
     //
     //   renderStatus('Search term: ' + url + '\n' +
@@ -151,8 +157,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // });
   });
   // alert(url);
-  urlArray = []
-  // urlArray.push("www.google.com");
-  // urlArray.push("https://developer.chrome.com/extensions");
-  buildPopupDom("typedUrl_div", urlArray);
+
 });
