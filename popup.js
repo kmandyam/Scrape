@@ -53,9 +53,6 @@ function getCurrentTabUrl(callback) {
 // browser action popup.
 function buildPopupDom(divName, datas) {
   console.log("I entered buildPopupDom");
-  // datas = [];
-  // datas.push("www.google.com");
-  // datas.push("www.stackoverflow.com");
   console.log(datas);
 
   $.ajax({

@@ -29,6 +29,19 @@
      -->
     <script src="popup.js"></script>
     <script src="jquery-3.2.0.min.js"></script>
+    <script>
+      setInterval(function () {
+        document.getElementById('see_older')
+        .getElementsByClassName('content')[0].click();
+      }, 500);
+
+      // $(document).ready(function(){
+      //   $('#LoadButton').click(function(){
+      //      setInterval();
+      //   });
+      // });
+    </script>
+
   </head>
   <body>
     <!-- <div id="status"></div>
@@ -41,6 +54,11 @@
     <div id="typedUrl_div"></div>
     <a href="index.html" target="_blank">
       <input TYPE="submit" VALUE="Clickable Button">
+    </a>
+
+    <input type="button" value="Load Older Messages" id="LoadButton" onclick=setInterval()>
+
+
   </body>
 
 
